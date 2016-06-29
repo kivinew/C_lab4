@@ -1,24 +1,20 @@
-#define __CRT_SECURE_NO_WARNINGS
-#include <stdlib.h>
-#include <stdio.h>
+п»ї#include <stdio.h>
 #include <stdarg.h>
-#include <string.h>
 
 double amount(char*, ...);
 
 void main()
 {
 	printf("Sum of three parameters is %.3f!\n\n", amount("213", 2222, -2222, 1000.575));
-	printf("But...really is %.3f!\n\n", (2222 - 2222 + 1000.575));
+	printf("Check: %.3f!\n\n", (2222 - 2222 + 1000.575));
 	return;
 }
 
 double amount(char* format, ...)
 {
-	va_list arg_ptr;														// список аргументов
-	va_start(arg_ptr, format);												// устанавливаем указатель на первый элемент
-	char type;																// переменная типа очередного параметра
-	int length = strlen(format);
+	va_list arg_ptr;														// СЃРїРёСЃРѕРє Р°СЂРіСѓРјРµРЅС‚РѕРІ
+	va_start(arg_ptr, format);												// СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РїРµСЂРІС‹Р№ СЌР»РµРјРµРЅС‚
+	char type;																// РїРµСЂРµРјРµРЅРЅР°СЏ С‚РёРїР° РѕС‡РµСЂРµРґРЅРѕРіРѕ РїР°СЂР°РјРµС‚СЂР°
 	double sum = 0;
 	while (*format)
 	{
