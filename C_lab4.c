@@ -4,36 +4,38 @@
 #include <stdarg.h>
 #include <string.h>
 
-float amount(char*, ...);
+double amount(char*, ...);
 
 void main()
 {
-	printf("Sum of three parameters is %.3f!\n\n", amount("123", 2999998, 100, 3.575));
-	printf("But...really is %.3f!\n\n", ( 1 + 2999998 + 3.575));
+	printf("Sum of three parameters is %.3f!\n\n", amount("213", 2222, -2222, 1000.575));
+	printf("But...really is %.3f!\n\n", (2222 - 2222 + 1000.575));
 	return;
 }
 
-float amount(char* format, ...)
+double amount(char* format, ...)
 {
 	va_list arg_ptr;														// список аргументов
+	va_start(arg_ptr, format);												// устанавливаем указатель на первый элемент
 	char type;																// переменная типа очередного параметра
-	int i,
-		length = strlen(format);
-	float sum = 0;
-	for (i = 0; i < length; i++)
+	int length = strlen(format);
+	double sum = 0;
+	while (*format)
 	{
-		va_start(arg_ptr, format);											// Устанавливаем указатель на первый элемент
-		type = format[i];
+		type = *format++;
 		switch (type)
 		{
 		case '1':
 			sum += va_arg(arg_ptr, int);
+			printf("sum1 = %.3f\n", sum);
 			break;
 		case '2':
-			sum += va_arg(arg_ptr, long);
+			sum += va_arg(arg_ptr, unsigned long);
+			printf("sum2 = %.3f\n", sum);
 			break;
 		case '3':
-			sum += va_arg(arg_ptr, float);
+			sum += va_arg(arg_ptr, double);
+			printf("sum3 = %.3f\n", sum);
 			break;
 		}
 	}
