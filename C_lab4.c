@@ -1,36 +1,42 @@
 #define __CRT_SECURE_NO_WARNINGS
 #include <stdlib.h>
-#include <varargs.h>
 #include <stdio.h>
+#include <stdarg.h>
+#include <string.h>
 
-int amount(int, ...);
+float amount(char*, ...);
 
 void main()
 {
-	int count;
-	printf("Enter count of numbers: ");
-	scanf("%d", &count);
-	printf("\n Sum of %d numbers is %d!", count, amount(count));
+	printf("Sum of three parameters is %.3f!\n\n", amount("123", 2999998, 100, 3.575));
+	printf("But...really is %.3f!\n\n", ( 1 + 2999998 + 3.575));
 	return;
 }
 
-int amount(int number, ...) 
+float amount(char* format, ...)
 {
-	va_list args;															// список аргументов
-	int sum = 0;
-	int testsum = 0;
-	va_start(args, number);													// Устанавливаем указатель на первый элемент
-	while (number--) 
+	va_list arg_ptr;														// список аргументов
+	char type;																// переменная типа очередного параметра
+	int i,
+		length = strlen(format);
+	float sum = 0;
+	for (i = 0; i < length; i++)
 	{
-		testsum += va_arg(args, int);										//Достаём следующий, указывая тип аргумента
-		if (testsum >= sum) 
+		va_start(arg_ptr, format);											// Устанавливаем указатель на первый элемент
+		type = format[i];
+		switch (type)
 		{
-			sum = testsum;
-		}
-		else 
-		{
-			exit(0);
+		case '1':
+			sum += va_arg(arg_ptr, int);
+			break;
+		case '2':
+			sum += va_arg(arg_ptr, long);
+			break;
+		case '3':
+			sum += va_arg(arg_ptr, float);
+			break;
 		}
 	}
-	va_end(args);
+	va_end(arg_ptr);
+	return sum;
 }
